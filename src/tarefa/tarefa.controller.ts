@@ -1,6 +1,6 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { TarefaService } from './tarefa.service';
-import { CreateTarefaDto } from './dto/createTarefa.dto';
+import { TarefaDto } from './dto/Tarefa.dto';
 
 @Controller('tarefa')
 export class TarefaController {
@@ -9,7 +9,12 @@ export class TarefaController {
   ) {}
 
   @Post()
-  createTarefa(@Body() createTarefa: CreateTarefaDto): Promise<CreateTarefaDto> {
+  createTarefa(@Body() createTarefa: TarefaDto): Promise<TarefaDto> {
     return this.tarefaService.createTarefa(createTarefa);
+  }
+
+  @Get()
+  readTarefa(): Promise<TarefaDto[]> {
+    return this.tarefaService.findAllTarefa();
   }
 }

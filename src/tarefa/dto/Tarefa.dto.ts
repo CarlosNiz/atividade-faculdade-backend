@@ -1,6 +1,6 @@
 import { TarefaEntity } from "../entities/tarefa.entity";
 
-export class CreateTarefaDto {
+export class TarefaDto {
     descricao: string;
     concluido: boolean;
 
