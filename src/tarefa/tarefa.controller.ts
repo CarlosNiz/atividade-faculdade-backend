@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { TarefaService } from './tarefa.service';
 import { TarefaDto } from './dto/Tarefa.dto';
 
@@ -9,12 +9,19 @@ export class TarefaController {
   ) {}
 
   @Post()
-  createTarefa(@Body() createTarefa: TarefaDto): Promise<TarefaDto> {
-    return this.tarefaService.createTarefa(createTarefa);
+  async createTarefa(@Body() createTarefa: TarefaDto): Promise<TarefaDto> {
+    return await this.tarefaService.createTarefa(createTarefa);
   }
 
   @Get()
-  readTarefa(): Promise<TarefaDto[]> {
-    return this.tarefaService.findAllTarefa();
+  async readTarefa(): Promise<TarefaDto[]> {
+    const tarefas = await this.tarefaService.findAllTarefa();
+    return tarefas.map(i => new TarefaDto(i));
+  }
+
+  @Put(':id')
+  async updateTarefa(@Param('id') id: number, @Body() tarefa: TarefaDto ): Promise<TarefaDto[]> {
+    const novaTarefa = await this.tarefaService.updateTarefa(id, tarefa);
+    return novaTarefa.map(i => new TarefaDto(i));
   }
 }

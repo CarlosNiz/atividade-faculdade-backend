@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { TarefaEntity } from './entities/tarefa.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -12,12 +12,17 @@ export class TarefaService {
     ) {}
 
     async createTarefa(createTarefa: TarefaDto) {
-        return this.tarefaRepository.save({
+        return await this.tarefaRepository.save({
             ...createTarefa
         });    
     }
 
-    async findAllTarefa(): Promise<TarefaDto[]> {
-        return this.tarefaRepository.find();
+    async findAllTarefa(): Promise<TarefaEntity[]> {
+        return await this.tarefaRepository.find();
+    }
+
+    async updateTarefa(id: number, tarefa: TarefaDto): Promise<TarefaEntity[]> {
+        await this.tarefaRepository.update(id, tarefa);
+        return await this.tarefaRepository.find();
     }
 }
