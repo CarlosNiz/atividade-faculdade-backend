@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { TarefaEntity } from './entities/tarefa.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -23,6 +23,11 @@ export class TarefaService {
 
     async updateTarefa(id: number, tarefa: TarefaDto): Promise<TarefaEntity[]> {
         await this.tarefaRepository.update(id, tarefa);
+        return await this.tarefaRepository.find();
+    }
+
+    async deleteTarefa(id: number): Promise<TarefaEntity[]> {
+        await this.tarefaRepository.delete(id);
         return await this.tarefaRepository.find();
     }
 }
