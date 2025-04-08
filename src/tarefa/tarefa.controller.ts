@@ -9,26 +9,23 @@ export class TarefaController {
     private readonly tarefaService: TarefaService
   ) {}
 
-  @Post()
+  @Post() 
   async createTarefa(@Body() createTarefa: TarefaDto): Promise<TarefaDto> {
     return await this.tarefaService.createTarefa(createTarefa);
   }
 
   @Get()
-  async readTarefa(): Promise<TarefaDto[]> {
-    const tarefas = await this.tarefaService.findAllTarefa();
-    return tarefas.map(i => new TarefaDto(i));
+  async readTarefa(): Promise<TarefaEntity[]> {
+    return await this.tarefaService.findAllTarefa();
   }
 
   @Put(':id')
-  async updateTarefa(@Param('id') id: number, @Body() tarefa: TarefaDto ): Promise<TarefaDto[]> {
-    const novaTarefa = await this.tarefaService.updateTarefa(id, tarefa);
-    return novaTarefa.map(i => new TarefaDto(i));
+  async updateTarefa(@Param('id') id: number, @Body() tarefa: TarefaDto ): Promise<TarefaEntity[]> {
+    return await this.tarefaService.updateTarefa(id, tarefa);
   }
 
   @Delete(':id')
-  async deleteTarefa(@Param('id') id: number): Promise<TarefaDto[]> {
-    const novaLista = await this.tarefaService.deleteTarefa(id);
-    return novaLista.map(i => new TarefaDto(i));
+  async deleteTarefa(@Param('id') id: number): Promise<TarefaEntity[]> {
+    return await this.tarefaService.deleteTarefa(id);
   }
 }
